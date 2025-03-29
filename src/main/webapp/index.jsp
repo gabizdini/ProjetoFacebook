@@ -33,6 +33,8 @@
 			    </c:forEach>
 			  </tbody>
 			</table>
+			
+			<a href="form_user.jsp" class="btn btn-primary"> Novo Usuário </a>
 		</div>
 	</div>	
 	

@@ -16,7 +16,7 @@ import model.dao.DAOFactory;
 import model.dao.UserDAO;
 
 //Rotas
-@WebServlet(urlPatterns = {""})
+@WebServlet(urlPatterns = {"","/create"})
 public class UsersController extends HttpServlet {
 
 	@Override
@@ -35,6 +35,32 @@ public class UsersController extends HttpServlet {
 			RequestDispatcher rd = req.getRequestDispatcher("index.jsp");
 			rd.forward(req, resp);
 //			resp.sendRedirect("index.jsp");
+			break;
+		}
+		case "/facebook/create":{
+			
+			//Recuperando os parametros da requisição
+			//input (name) do HTML
+			String userName = req.getParameter("user_name");
+			String userGender = req.getParameter("user_gender");
+			String userEmail = req.getParameter("user_email");
+			
+			//Cria e seta os valores do usuario
+			User user = new User();
+			user.setName(userName);
+			user.setGender(userGender);
+			user.setEmail(userEmail);
+			
+			//Salva no banco
+			UserDAO dao = DAOFactory.createDAO(UserDAO.class);
+			try {
+				dao.save(user);
+			}catch (ModelException e) {
+				System.err.println("Erro ao usar o usuário!");
+				e.printStackTrace();
+			}
+			
+			resp.sendRedirect("/facebook");
 			break;
 		}
 		
